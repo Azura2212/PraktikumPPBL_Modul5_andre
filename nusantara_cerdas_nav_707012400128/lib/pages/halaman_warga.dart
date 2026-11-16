@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,17 +14,39 @@ class HalamanWarga extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          const Text(
-            'Ruang Warga',
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(20),
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Kelola layanan favorit dan pantau pengajuanmu.',
-            style: Theme.of(context).textTheme.bodyMedium,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.person_pin_circle_outlined,
+                  size: 36,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Ruang Warga',
+                        style: Theme.of(context).textTheme.titleLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Kelola layanan favorit dan pantau pengajuanmu.',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 24),
           _bagianFavorit(context),
@@ -49,10 +70,7 @@ class HalamanWarga extends StatelessWidget {
                 SizedBox(width: 8),
                 Text(
                   'Layanan Favorit',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -73,18 +91,13 @@ class HalamanWarga extends StatelessWidget {
                   children: daftarFavorit.map((namaLayanan) {
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
+                      leading: const Icon(Icons.star, color: Colors.amber),
                       title: Text(namaLayanan),
                       trailing: IconButton(
                         tooltip: 'Hapus favorit',
                         icon: const Icon(Icons.close),
                         onPressed: () {
-                          context
-                              .read<FavoritCubit>()
-                              .batalTandai(namaLayanan);
+                          context.read<FavoritCubit>().batalTandai(namaLayanan);
                         },
                       ),
                     );
@@ -107,18 +120,12 @@ class HalamanWarga extends StatelessWidget {
           children: [
             const Row(
               children: [
-                Icon(
-                  Icons.assignment_outlined,
-                  color: Colors.indigo,
-                ),
+                Icon(Icons.assignment_outlined, color: Colors.indigo),
                 SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     'Pengajuan Layanan',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -129,22 +136,16 @@ class HalamanWarga extends StatelessWidget {
                 if (daftarPengajuan.isEmpty) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      'Belum ada pengajuan layanan.',
-                    ),
+                    child: Text('Belum ada pengajuan layanan.'),
                   );
                 }
 
                 return Column(
                   children: [
-                    for (int index = 0;
-                        index < daftarPengajuan.length;
-                        index++)
+                    for (int index = 0; index < daftarPengajuan.length; index++)
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
-                          child: Text('${index + 1}'),
-                        ),
+                        leading: CircleAvatar(child: Text('${index + 1}')),
                         title: Text(daftarPengajuan[index]),
                         subtitle: const Text('Pengajuan tercatat'),
                         trailing: IconButton(
@@ -154,9 +155,9 @@ class HalamanWarga extends StatelessWidget {
                             color: Colors.red,
                           ),
                           onPressed: () {
-                            context
-                                .read<PengajuanCubit>()
-                                .hapusPengajuan(index);
+                            context.read<PengajuanCubit>().hapusPengajuan(
+                              index,
+                            );
                           },
                         ),
                       ),
@@ -169,10 +170,7 @@ class HalamanWarga extends StatelessWidget {
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.pengaturan,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.pengaturan);
                 },
                 icon: const Icon(Icons.settings_outlined),
                 label: const Text('Buka Pengaturan Kota'),

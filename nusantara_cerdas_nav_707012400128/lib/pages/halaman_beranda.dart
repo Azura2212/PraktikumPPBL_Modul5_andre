@@ -55,8 +55,8 @@ class HalamanBeranda extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF3949AB),
-                    Color(0xFF7986CB),
+                    Color(0xFF0F766E),
+                    Color(0xFF34A58E),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -67,7 +67,7 @@ class HalamanBeranda extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
-                    Icons.location_city,
+                    Icons.location_city_rounded,
                     color: Colors.white,
                     size: 42,
                   ),
@@ -131,12 +131,21 @@ class HalamanBeranda extends StatelessWidget {
                           crossAxisAlignment:
                               CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              pilar['ikon'] as IconData,
-                              color: pilar['warna'] as Color,
-                              size: 30,
+                            Container(
+                              width: 42,
+                              height: 42,
+                              decoration: BoxDecoration(
+                                color: (pilar['warna'] as Color)
+                                    .withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(13),
+                              ),
+                              child: Icon(
+                                pilar['ikon'] as IconData,
+                                color: pilar['warna'] as Color,
+                                size: 24,
+                              ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 8),
                             Text(
                               pilar['nama'] as String,
                               style: const TextStyle(

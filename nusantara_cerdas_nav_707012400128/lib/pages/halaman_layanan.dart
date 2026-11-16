@@ -35,19 +35,25 @@ class HalamanLayanan extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 12),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Temukan Layanan Kota',
-                  style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Temukan Layanan Kota',
+                    style: TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  SizedBox(height: 4),
+                  Text('Pilih kategori untuk melihat layanan yang tersedia.'),
+                ],
               ),
             ),
             const TabBar(
               isScrollable: true,
+              dividerColor: Colors.transparent,
+              indicatorSize: TabBarIndicatorSize.label,
               tabs: [
                 Tab(
                   icon: Icon(Icons.description_outlined),
@@ -131,6 +137,8 @@ class _KartuLayanan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final warnaUtama = Theme.of(context).colorScheme.primary;
+
     return Card(
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(
@@ -138,10 +146,10 @@ class _KartuLayanan extends StatelessWidget {
           vertical: 8,
         ),
         leading: CircleAvatar(
-          backgroundColor: Colors.indigo.withValues(alpha: 0.1),
+          backgroundColor: warnaUtama.withValues(alpha: 0.1),
           child: Icon(
             _ikonKategori,
-            color: Colors.indigo,
+            color: warnaUtama,
           ),
         ),
         title: Text(
@@ -151,30 +159,36 @@ class _KartuLayanan extends StatelessWidget {
           ),
         ),
         subtitle: Text(kategori),
-        trailing: BlocBuilder<FavoritCubit, Set<String>>(
-          builder: (context, daftarFavorit) {
-            final bool sudahFavorit =
-                daftarFavorit.contains(namaLayanan);
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BlocBuilder<FavoritCubit, Set<String>>(
+              builder: (context, daftarFavorit) {
+                final bool sudahFavorit =
+                    daftarFavorit.contains(namaLayanan);
 
-            return IconButton(
-              tooltip: sudahFavorit
-                  ? 'Hapus dari favorit'
-                  : 'Tambahkan ke favorit',
-              icon: Icon(
-                sudahFavorit
-                    ? Icons.star
-                    : Icons.star_border,
-                color: sudahFavorit
-                    ? Colors.amber.shade700
-                    : Colors.grey,
-              ),
-              onPressed: () {
-                context
-                    .read<FavoritCubit>()
-                    .toggleFavorit(namaLayanan);
+                return IconButton(
+                  tooltip: sudahFavorit
+                      ? 'Hapus dari favorit'
+                      : 'Tambahkan ke favorit',
+                  icon: Icon(
+                    sudahFavorit
+                        ? Icons.star
+                        : Icons.star_border,
+                    color: sudahFavorit
+                        ? Colors.amber.shade700
+                        : Colors.grey,
+                  ),
+                  onPressed: () {
+                    context
+                        .read<FavoritCubit>()
+                        .toggleFavorit(namaLayanan);
+                  },
+                );
               },
-            );
-          },
+            ),
+            Icon(Icons.chevron_right, color: Colors.grey.shade500),
+          ],
         ),
         onTap: () => _bukaDetail(context),
       ),

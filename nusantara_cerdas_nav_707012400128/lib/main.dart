@@ -35,13 +35,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
+          seedColor: const Color(0xFF0F766E),
         ),
-        scaffoldBackgroundColor: const Color(0xFFF7F8FC),
+        scaffoldBackgroundColor: const Color(0xFFF3F8F7),
         appBarTheme: const AppBarTheme(
           centerTitle: false,
           elevation: 0,
           scrolledUnderElevation: 0,
+          backgroundColor: Color(0xFFF3F8F7),
         ),
         cardTheme: CardThemeData(
           elevation: 0,
